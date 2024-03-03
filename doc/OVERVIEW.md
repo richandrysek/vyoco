@@ -4,18 +4,20 @@
 
 ### Virtual hardware
 
-The current setting is for i9-13th generation, please adjust it to the values of your
-host system. Adjust following variables in the file "variables.pkr.hcl" :
+The current setting is for i9-13th generation, please adjust it to the values
+of your host system. Adjust following variables in the file "variables.pkr.hcl":
 
-    cpus
-    memory
-    disk_size
+    * cpus
+    * memory
+    * disk_size
 
 ### Change password
 
-Default user and password is "vagrant", to change the password proceed this command
+Default user and password is "vagrant", to change the password proceed this command:
 
+    ```shell
     python3 -c 'import crypt; print(crypt.crypt("vagrant", crypt.mksalt(crypt.METHOD_SHA512)))'
+    ```
 
 and exchange the result with a current content in a file "boxes/ubuntu/22_04/data/user-data", part "identity->password"
 
@@ -28,11 +30,13 @@ a subdirectory "iso":
 
 ## Build
 
-Proceed following commands to build virtual machine and a vagrant box
+Proceed following commands to build virtual machine and a vagrant box:
 
+    ```shell
     packer init .
     packer validate -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
     packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+    ```
 
 After succefull build will be created two files which can be uploaded
 to app.vagrantup.com:
@@ -42,27 +46,37 @@ to app.vagrantup.com:
 
 To upload the box to a vagrant cloud box "richandrysek/vyoco" proceed this command:
 
+    ```shell
     packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+    ```
 
 ## Debugging a box before uploading
 
 To try a generated box before uploading it to the cloud follow these commands.
 
-1) Add locally the generated box
+1) Add locally the generated box:
 
-    vagrant box add --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.1.box
+        ```shell
+        vagrant box add --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.1.box
+        ```
 
-2) Create a Vagrantfile
+2) Create a Vagrantfile:
 
-    vagrant init vyoco-dev
+        ```shell
+        vagrant init vyoco-dev
+        ```
 
-3) Start your virtual machine
+3) Start your virtual machine:
 
-    vagrant up --provider=vmware_desktop
+        ```shell
+        vagrant up --provider=vmware_desktop
+        ```
 
-4) Connect via ssh
+4) Connect via ssh:
 
-    vagrant ssh
+        ```shell
+        vagrant ssh
+        ```
 
 ## Custom box
 
