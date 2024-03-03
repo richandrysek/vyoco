@@ -60,7 +60,7 @@ To try a generated box before uploading it to the cloud follow these commands.
 
     vagrant up --provider=vmware_desktop
 
-4) Connect over ssh
+4) Connect via ssh
 
     vagrant ssh
 
