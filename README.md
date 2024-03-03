@@ -6,10 +6,12 @@ Virtual machine with Yocto for developers, when you can't use a container.
 
 ## System requirements
 
-vagrant                 2.4.1
-packer                  1.10.1
-vmware                  17.5.0 build-22583795
-Vagrant VMware Utility  1.0.22
+|SW Component           |Version                |
+|-----------------------|-----------------------|
+|vagrant                | 2.4.1                 |
+|packer                 | 1.10.1                |
+|vmware                 | 17.5.0 build-22583795 |
+|Vagrant VMware Utility | 1.0.22                |
 
 Then install the Vagrant plugin in the terminal:
 
