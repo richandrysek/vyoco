@@ -1,0 +1,41 @@
+#cloud-config
+autoinstall:
+  version: 1
+  apt:
+    geoip: true
+    preserve_sources_list: false
+    primary:
+    - arches: [amd64, i386]
+      uri: http://gb.archive.ubuntu.com/ubuntu
+    - arches: [default]
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  identity:
+    hostname: vyoco
+    username: vagrant
+    password: $6$zimxGpCRrt/h6rB4$cUBYAUvdhTugywklPf/rouydIuTEnYNyos56kytUl1P/UfnPyrMUBIB18JbRUTC0Doj6CjGVMCPfFau4PDWqf/
+  ssh:
+    allow-pw: true
+    install-server: true
+  locale: en_US
+  keyboard: 
+    layout: gb
+  storage:
+    layout:
+      name: lvm
+    config:
+      - type: disk
+        id: disk0
+        match:
+          size: largest
+      - type: partition
+        id: boot-partition
+        device: disk0
+        size: 500M
+      - type: partition
+        id: root-partition
+        device: disk0
+        size: -1
+  late-commands:
+    - "echo 'Defaults:vagrant !requiretty' > /target/etc/sudoers.d/vagrant"
+    - "echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/vagrant"
+    - "chmod 440 /target/etc/sudoers.d/vagrant"
