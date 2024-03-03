@@ -11,7 +11,7 @@ packer                  1.10.1
 vmware                  17.5.0 build-22583795
 Vagrant VMware Utility  1.0.22
 
-After that in the terminal install the vagrant plugin:
+Then install the Vagrant plugin in the terminal
 
     vagrant plugin install vagrant-vmware-desktop
     vagrant plugin list
@@ -33,27 +33,27 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
 
     vagrant up --provider=vmware_desktop
 
-3) Connect over ssh
+3) Connect via ssh
 
     vagrant ssh
 
    Note: User "vagrant" and password "vagrant".
 
-4) Change directory to a prepared workspace
+4) Change a directory to a prepared workspace
 
     cd ~/workspace
     ls
 
-5) Clone the tested poky version :
+5) Clone a tested poky version
 
     source source/clone_poky.sh
 
-6) Create your build directory :
+6) Create your build directory
 
     source source/poky/oe-init-build-env
 
 7) It is recommend to share some directories in your "build/conf/local.conf" to build
-   yocto artifacts faster, for that please use these settings:
+   yocto artifacts faster, please use these settings
 
     DL_DIR ?= "/home/vagrant/workspace/share/bitbake.downloads"
     SSTATE_DIR ?= "/home/vagrant/workspace/share/sstate-cache"
@@ -62,5 +62,5 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
 
 ## Documentation
 
-* [Getting Started](file://doc/OVERVIEW.md)
+* [Getting Started](https://github.com/richandrysek/vyoco/blob/main/doc/OVERVIEW.md)
 * [Vagrant cloud box](https://app.vagrantup.com/richandrysek/boxes/vyoco)
