@@ -15,30 +15,28 @@ of your host system. Adjust following variables in the file "variables.pkr.hcl":
 
 Default user and password is "vagrant", to change the password proceed this command:
 
-    ```shell
-    python3 -c 'import crypt; print(crypt.crypt("vagrant", crypt.mksalt(crypt.METHOD_SHA512)))'
-    ```
+```shell
+python3 -c 'import crypt; print(crypt.crypt("vagrant", crypt.mksalt(crypt.METHOD_SHA512)))'
+```
 
 and exchange the result with a current content in a file "boxes/ubuntu/22_04/data/user-data", part "identity->password"
 
 ### Build optimization(s)
 
 To do not download each time the Ubuntu iso image you can store an expected image into
-a subdirectory "iso":
-
-    https://releases.ubuntu.com/22.04/ubuntu-22.04.4-live-server-amd64.iso
+a subdirectory "iso", <https://releases.ubuntu.com/22.04/ubuntu-22.04.4-live-server-amd64.iso> .
 
 ## Build
 
 Proceed following commands to build virtual machine and a vagrant box:
 
-    ```shell
-    packer init .
-    packer validate -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
-    packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
-    ```
+```shell
+packer init .
+packer validate -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+```
 
-After succefull build will be created two files which can be uploaded
+After successful build will be created two files which can be uploaded
 to app.vagrantup.com:
 
     * vyoco_vmware-iso_X.X.X.box - vagrant box 
@@ -46,9 +44,9 @@ to app.vagrantup.com:
 
 To upload the box to a vagrant cloud box "richandrysek/vyoco" proceed this command:
 
-    ```shell
-    packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
-    ```
+```shell
+packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+```
 
 ## Debugging a box before uploading
 
@@ -56,27 +54,27 @@ To try a generated box before uploading it to the cloud follow these commands.
 
 1) Add locally the generated box:
 
-        ```shell
-        vagrant box add --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.1.box
-        ```
+    ```shell
+    vagrant box add --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.1.box
+    ```
 
 2) Create a Vagrantfile:
 
-        ```shell
-        vagrant init vyoco-dev
-        ```
+    ```shell
+    vagrant init vyoco-dev
+    ```
 
 3) Start your virtual machine:
 
-        ```shell
-        vagrant up --provider=vmware_desktop
-        ```
+    ```shell
+    vagrant up --provider=vmware_desktop
+    ```
 
 4) Connect via ssh:
 
-        ```shell
-        vagrant ssh
-        ```
+    ```shell
+    vagrant ssh
+    ```
 
 ## Custom box
 

@@ -31,8 +31,8 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
 2) Add these lines to login and to update a ssh key:
 
     ```text
-        config.ssh.password = 'vagrant'
-        config.ssh.insert_key = true
+    config.ssh.password = 'vagrant'
+    config.ssh.insert_key = true
     ```
 
 3) Start your virtual machine:
