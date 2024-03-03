@@ -2,7 +2,7 @@
 
 [andrysek](https://andrysek.de/)
 
-Virtual machine with Yocto for developers, when you can't use a container.
+Virtual machine with Yocto for developers if you cannot use a container.
 
 ## System requirements
 
