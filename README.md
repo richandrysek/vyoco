@@ -85,4 +85,7 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
 ## Documentation
 
 * [Getting Started](https://github.com/richandrysek/vyoco/blob/main/doc/OVERVIEW.md)
+* [Changelog](https://github.com/richandrysek/vyoco/blob/main/CHANGELOG)
 * [Vagrant cloud box](https://app.vagrantup.com/richandrysek/boxes/vyoco)
+* [Support](https://github.com/richandrysek/vyoco/blob/main/SUPPORT)
+* [Security](https://github.com/richandrysek/vyoco/blob/main/SECURITY)
