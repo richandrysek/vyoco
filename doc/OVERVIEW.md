@@ -6,9 +6,10 @@
 
 The current setting is for i9-13th generation, please adjust it to the values
 of your host system. Adjust following variables in the file "variables.pkr.hcl":
-    * cpus
-    * memory
-    * disk_size
+
+* cpus
+* memory
+* disk_size
 
 ### Change password
 
@@ -18,16 +19,19 @@ Default password is "vagrant", to change it proceed this command:
 python3 -c 'import crypt; print(crypt.crypt("vagrant", crypt.mksalt(crypt.METHOD_SHA512)))'
 ```
 
-and exchange the result with a current content in a file "boxes/ubuntu/22_04/data/user-data", part "identity->password"
+and exchange the result with a current content in a file
+"boxes/ubuntu/22_04/data/user-data", part "identity->password"
 
 ### Build optimization(s)
 
-To do not download each time the Ubuntu iso image you can store an expected image into
-a subdirectory "iso", <https://releases.ubuntu.com/22.04/ubuntu-22.04.4-live-server-amd64.iso> .
+To do not download each time the Ubuntu iso image you can click on the link
+below and store an image into a subdirectory "iso" :
+
+* <https://releases.ubuntu.com/22.04/ubuntu-22.04.4-live-server-amd64.iso>
 
 ## Build
 
-Proceed following commands to build virtual machine and a vagrant box:
+Proceed following commands to build a virtual machine and a vagrant box:
 
 ```shell
 packer init .
@@ -37,8 +41,9 @@ packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22_04/p
 
 After successful build will be created two files which can be uploaded
 to app.vagrantup.com:
-    * vyoco_vmware-iso_X.X.X.box - vagrant box
-    * vyoco_vmware-iso_X.X.X.box.sha512 - file with a checksum for the vagrant vmware box
+
+* vyoco_vmware-iso_X.X.X.box - vagrant box
+* vyoco_vmware-iso_X.X.X.box.sha512 - file with a checksum for the vagrant vmware box
 
 To upload the box to a vagrant cloud box "richandrysek/vyoco" proceed this command:
 
