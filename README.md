@@ -89,3 +89,4 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
 * [Vagrant cloud box](https://app.vagrantup.com/richandrysek/boxes/vyoco)
 * [Support](https://github.com/richandrysek/vyoco/blob/main/SUPPORT)
 * [Security](https://github.com/richandrysek/vyoco/blob/main/SECURITY)
+* [Discuss about voyco!](https://github.com/richandrysek/vyoco/discussions/1)
