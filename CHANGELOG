@@ -1,8 +1,18 @@
 Changelog
 ===========
 
+0.0.2
+---------------------------------------
+
+Features:
+
+* add test/cloud/Vagrantfile to make it more user friendly
+* cloned only the given branch from a poky
+
 0.0.1
 ---------------------------------------
+
+Features:
 
 * Ubuntu 22.04.4 live server
 * Toolchain ready for Yocto 4.0.16

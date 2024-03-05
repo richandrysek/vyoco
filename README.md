@@ -23,24 +23,28 @@ vagrant plugin list
 ## Quick start - vmware
 
 The build releases are available on <https://app.vagrantup.com/richandrysek/boxes/vyoco> .
+It depends on your internet connection how fast it will be done.
 
-1) Create a Vagrantfile:
+1) Go to subdirectory "test/cloud"
 
     ```shell
-    vagrant init richandrysek/vyoco
+    cd test/cloud
     ```
 
-2) Add these lines to login and to update a ssh key:
-
-    ```text
-    config.ssh.password = 'vagrant'
-    config.ssh.insert_key = true
-    ```
-
-3) Start your virtual machine:
+2) Start a virtual machine and check its status:
 
     ```shell
     vagrant up --provider=vmware_desktop
+    vagrant status
+    ```
+
+    The box is downloaded and the hash value sha512 is automatically checked,
+    the virtual machine is then created and started.
+
+3) Clone a specific and only specific branch of yocto:
+
+    ```shell
+    vagrant ssh -c "cd ~/workspace && source source/clone_poky.sh"
     ```
 
 4) Connect via ssh:
@@ -51,28 +55,14 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
 
    Note: User "vagrant" and password "vagrant".
 
-5) Change a directory to a prepared workspace:
+5) Create your build directory:
 
     ```shell
     cd ~/workspace
-    ls
-    ```
-
-6) Clone a tested poky version:
-
-    ```shell
-    source source/clone_poky.sh
-    ```
-
-    Note: It depends on your internet connection how fast it will be done.
-
-7) Create your build directory:
-
-    ```shell
     source source/poky/oe-init-build-env
     ```
 
-8) It is recommend to share some directories in your "build/conf/local.conf"
+6) It is recommend to share some directories in your "build/conf/local.conf"
    to build yocto artifacts faster, please use these settings:
 
     ```text
@@ -80,7 +70,7 @@ The build releases are available on <https://app.vagrantup.com/richandrysek/boxe
     SSTATE_DIR ?= "/home/vagrant/workspace/share/sstate-cache"
     ```
 
-9) Enjoy your yocto development
+7) Enjoy your yocto development
 
 ## Documentation
 

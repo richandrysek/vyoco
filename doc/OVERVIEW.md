@@ -51,6 +51,34 @@ To upload the box to a vagrant cloud box "richandrysek/vyoco" proceed this comma
 packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
 ```
 
+## Recreate a Vagrantfile in test/cloud
+
+1) Go to subdirectory "test/cloud":
+
+    ```shell
+    cd test/cloud
+    ```
+
+2) Update the box to the last release version:
+
+    ```shell
+    vagrant box update --box richandrysek/vyoco
+    vagrant box list
+    ```
+
+3) Force to recreate a Vagrantfile:
+
+    ```shell
+    vagrant init -f richandrysek/vyoco
+    ```
+
+4) Add the following lines below the line "config.vm.box = "vyoco-dev"" to log in and update an ssh key:
+
+    ```text
+    config.ssh.password = 'vagrant'
+    config.ssh.insert_key = true
+    ```
+
 ## Debugging a box before uploading
 
 To try a generated box before uploading it to the cloud follow these commands.
@@ -59,21 +87,30 @@ To try a generated box before uploading it to the cloud follow these commands.
 
     ```shell
     vagrant box add --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.1.box
+    vagrant box list
     ```
 
 2) Create a Vagrantfile:
 
     ```shell
+    cd test/local
     vagrant init vyoco-dev
     ```
 
-3) Start your virtual machine:
+3) Start your virtual machine and check its status:
 
     ```shell
     vagrant up --provider=vmware_desktop
+    vagrant status
     ```
 
-4) Connect via ssh:
+4) Clone a specific and only specific branch of yocto:
+
+    ```shell
+    vagrant ssh -c "cd ~/workspace && source source/clone_poky.sh"
+    ```
+
+5) Connect via ssh:
 
     ```shell
     vagrant ssh
