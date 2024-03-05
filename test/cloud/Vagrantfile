@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "vyoco-dev"
+  config.vm.box = "richandrysek/vyoco"
 
   config.ssh.password = 'vagrant'
   config.ssh.insert_key = true
