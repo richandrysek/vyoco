@@ -72,7 +72,7 @@ packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22_04/
     vagrant init -f richandrysek/vyoco
     ```
 
-4) Add the following lines below the line "config.vm.box = "vyoco-dev"" to log in and update an ssh key:
+4) Add the following lines below the line "config.vm.box = "vyoco"" to log in and update an ssh key:
 
     ```text
     config.ssh.password = 'vagrant'
