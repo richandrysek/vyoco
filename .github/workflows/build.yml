@@ -25,6 +25,22 @@ jobs:
 
       - name: Try to build the vmware ubuntu 22.04 machine
         run: |
+          powershell.exe -Command "Remove-Item -Force -Recurse '$pwd/builds/*'"
           packer init .
           packer validate -var-file="boxes/ubuntu/22.04/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22.04/yocto.pkrvars.hcl" -var="yocto_identifier=kirkstone-4.0.16" .
           packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22.04/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22.04/yocto.pkrvars.hcl" -var="yocto_identifier=kirkstone-4.0.16" .
+
+      - name: Test created box
+        run: |
+          powershell.exe -Command "Remove-Item -Force -Recurse '$pwd/test/local/*'"
+          cd test/local
+          vagrant box add --force --provider=vmware_desktop vyoco-dev ..\..\builds\vyoco_vmware-iso_0.0.4.box
+          vagrant box list
+          vagrant init vyoco-dev
+          vagrant up --provider=vmware_desktop
+          vagrant status
+          vagrant ssh -c "cd ~/workspace && ls -lsa"
+          vagrant destroy -gf
+          vagrant box remove vyoco-dev
+
+          
