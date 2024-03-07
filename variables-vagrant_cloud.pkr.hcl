@@ -19,6 +19,7 @@ variable "vagrant_cloud_box_description" {
 variable "vagrant_cloud_access_token" {
   type        = string
   default     = env("PKR_VAR_VAGRANT_CLOUD_TOKEN")
+  sensitive   = true
 }
 
 variable "vagrant_keep_input_artifact" {

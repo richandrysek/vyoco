@@ -1,6 +1,17 @@
 Changelog
 ===========
 
+0.0.4
+---------------------------------------
+
+Features:
+
+* yocto_poky_rev used only for "custom" revisions
+
+Documentation
+
+* add a chapter "Extend a disk size" in OVERVIEW.md
+
 0.0.3
 ---------------------------------------
 
