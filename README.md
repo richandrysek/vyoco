@@ -8,12 +8,12 @@ Virtual machine with Yocto for developers if you cannot use a container.
 
 ## System requirements
 
-|SW Component           |Version                |
-|-----------------------|-----------------------|
-|vagrant                | 2.4.1                 |
-|packer                 | 1.10.1                |
-|vmware                 | 17.5.0 build-22583795 |
-|Vagrant VMware Utility | 1.0.22                |
+|SW Component           |Version                |URL                                                                                     |
+|-----------------------|-----------------------|----------------------------------------------------------------------------------------|
+|packer                 | 1.10.1                | <https://developer.hashicorp.com/packer/install?product_intent=packer>                 |
+|vagrant                | 2.4.1                 | <https://developer.hashicorp.com/vagrant/install?product_intent=vagrant>               |
+|VMware Workstation     | 17.5.0 build-22583795 | <https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html>      |
+|Vagrant VMware Utility | 1.0.22                | <https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility> |
 
 Then install the Vagrant plugin in the terminal:
 
