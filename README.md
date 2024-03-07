@@ -1,5 +1,7 @@
 # vyoco
 
+[![CI](https://github.com/richandrysek/vyoco/actions/workflows/build.yml/badge.svg)](https://github.com/richandrysek/vyoco/actions/workflows/build.yml)
+
 [andrysek](https://andrysek.de/)
 
 Virtual machine with Yocto for developers if you cannot use a container.

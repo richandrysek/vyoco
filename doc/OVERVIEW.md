@@ -86,7 +86,7 @@ To try a generated box before uploading it to the cloud follow these commands.
 1) Add locally the generated box:
 
     ```shell
-    vagrant box add --force --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.3.box
+    vagrant box add --force --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.4.box
     vagrant box list
     ```
 
@@ -129,3 +129,55 @@ For a custom vagrant cloud box please follow these steps:
     * "yocto_packages" with a list of tools to be installed for your yocto version
     * "yocto_poky_rev" with a revision/branch/tag to be cloned
 4) Set an environment variable "PKR_VAR_VAGRANT_CLOUD_TOKEN" with a generated token.
+
+## Pimp your machine
+
+### Extend a disk size
+
+Before we will start let's check a current disk usage:
+
+```shell
+vagrant@vyoco:~$ lsblk /dev/sda
+NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sda                         8:0    0  200G  0 disk
+├─sda1                      8:1    0    1M  0 part
+├─sda2                      8:2    0    2G  0 part /boot
+└─sda3                      8:3    0  198G  0 part
+  └─ubuntu--vg-ubuntu--lv 253:0    0 99.3G  0 lvm  /
+sudo vgs
+  VG        #PV #LV #SN Attr   VSize    VFree  
+  ubuntu-vg   1   1   0 wz--n- <198.00g <98.71g
+```
+
+The size of the disk sda3 is 198GB, but currently allocated 99.3GB and we see
+99 GB free (my bad I have to check the installation later). Let's extend with
+a whole free size:
+
+```shell
+vagrant@vyoco:~$ sudo lvextend  -l+100%FREE /dev/ubuntu-vg/ubuntu-lv
+  Size of logical volume ubuntu-vg/ubuntu-lv changed from <99.29 GiB (25418 extents) to <198.00 GiB (50687 extents).
+  Logical volume ubuntu-vg/ubuntu-lv successfully resized.
+```
+
+Now let's use it:
+
+```shell
+vagrant@vyoco:~$ df -hPT /
+Filesystem                        Type  Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4   97G  8.0G   84G   9% /
+
+vagrant@vyoco:~$ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+resize2fs 1.46.5 (30-Dec-2021)
+Filesystem at /dev/ubuntu-vg/ubuntu-lv is mounted on /; on-line resizing required
+old_desc_blocks = 13, new_desc_blocks = 25
+The filesystem on /dev/ubuntu-vg/ubuntu-lv is now 51903488 (4k) blocks long.
+
+vagrant@vyoco:~$ df -hPT /
+Filesystem                        Type  Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4  195G  8.0G  178G   5% /
+```
+
+The disk size have changed from 97GB to 195GB and has 178GB available.
+
+If this is still not enough, you must first shut down your machine
+and then increase the hard disk size in the virtual machine settings.

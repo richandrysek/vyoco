@@ -18,7 +18,6 @@ yocto_packages     = {
 }
 
 yocto_poky_rev  = {
-  "kirkstone-4.0.16" = "kirkstone-4.0.16"
 # Example of extension with a custom poky revision
 # "custom"           = "kirkstone-4.0.10"
 }
