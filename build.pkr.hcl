@@ -54,7 +54,7 @@ build {
       "mkdir -p ${var.yocto_workspace_dir}/share/bitbake.downloads",
       "mkdir -p ${var.yocto_workspace_dir}/share/sstate-cache",
       "mkdir -p ${var.yocto_workspace_dir}/source",
-      "echo \"git clone -b ${lookup(var.yocto_poky_rev, var.yocto_identifier, "master")} --single-branch git://git.yoctoproject.org/poky.git\" > ${var.yocto_workspace_dir}/source/clone_poky.sh",
+      "echo \"git clone -b ${lookup(var.yocto_poky_rev, var.yocto_identifier, var.yocto_identifier)} --single-branch git://git.yoctoproject.org/poky.git\" > ${var.yocto_workspace_dir}/source/clone_poky.sh",
     ]
   }
 
