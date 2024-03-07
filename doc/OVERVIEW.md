@@ -86,7 +86,7 @@ To try a generated box before uploading it to the cloud follow these commands.
 1) Add locally the generated box:
 
     ```shell
-    vagrant box add --force --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.3.box
+    vagrant box add --force --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.4.box
     vagrant box list
     ```
 
