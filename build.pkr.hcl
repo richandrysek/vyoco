@@ -33,7 +33,7 @@ build {
     name     = "Install yocto toolchain & store version"
     inline   = [
       "DEBIAN_FRONTEND=noninteractive sudo apt-get update",
-      "DEBIAN_FRONTEND=noninteractive sudo apt install -y ${var.yocto_tools}",
+      "DEBIAN_FRONTEND=noninteractive sudo apt install -y ${lookup(var.yocto_packages, var.yocto_identifier, "")}",
       "sudo sh -c 'echo \"Version: ${var.vagrant_cloud_box_version}\" > /etc/vyoco'"
     ]
   }
@@ -54,7 +54,7 @@ build {
       "mkdir -p ${var.yocto_workspace_dir}/share/bitbake.downloads",
       "mkdir -p ${var.yocto_workspace_dir}/share/sstate-cache",
       "mkdir -p ${var.yocto_workspace_dir}/source",
-      "echo \"git clone -b ${var.yocto_poky_rev} git://git.yoctoproject.org/poky.git\" > ${var.yocto_workspace_dir}/source/clone_poky.sh",
+      "echo \"git clone -b ${lookup(var.yocto_poky_rev, var.yocto_identifier, "master")} --single-branch git://git.yoctoproject.org/poky.git\" > ${var.yocto_workspace_dir}/source/clone_poky.sh",
     ]
   }
 
@@ -67,7 +67,7 @@ build {
     }
 
     post-processor "checksum" {
-      checksum_types      = ["sha512"]
+      checksum_types      = ["${local.box_checksum_type}"]
       keep_input_artifact = true
       output              = "builds/${source.name}_${source.type}_${var.vagrant_cloud_box_version}.box.{{.ChecksumType}}"
     }

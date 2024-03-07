@@ -20,7 +20,7 @@ python3 -c 'import crypt; print(crypt.crypt("vagrant", crypt.mksalt(crypt.METHOD
 ```
 
 and exchange the result with a current content in a file
-"boxes/ubuntu/22_04/data/user-data", part "identity->password"
+"boxes/ubuntu/22.4/data/user-data", part "identity->password"
 
 ### Build optimization(s)
 
@@ -35,8 +35,8 @@ Proceed following commands to build a virtual machine and a vagrant box:
 
 ```shell
 packer init .
-packer validate -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
-packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+packer validate -var-file="boxes/ubuntu/22.04/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22.04/yocto.pkrvars.hcl" -var="yocto_identifier=kirkstone-4.0.16" .
+packer build -on-error=ask -only='build_vyoco.*' -var-file="boxes/ubuntu/22.04/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22.04/yocto.pkrvars.hcl" -var="yocto_identifier=kirkstone-4.0.16" .
 ```
 
 After successful build will be created two files which can be uploaded
@@ -48,8 +48,36 @@ to app.vagrantup.com:
 To upload the box to a vagrant cloud box "richandrysek/vyoco" proceed this command:
 
 ```shell
-packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22_04/pkrvars/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl" .
+packer build -on-error=ask -only='upload_vyoco.*' -var-file="boxes/ubuntu/22.04/vmware.pkrvars.hcl" -var-file="boxes/ubuntu/22.04/yocto.pkrvars.hcl" -var="yocto_identifier=kirkstone-4.0.16" .
 ```
+
+## Recreate a Vagrantfile in test/cloud
+
+1) Go to subdirectory "test/cloud":
+
+    ```shell
+    cd test/cloud
+    ```
+
+2) Update the box to the last release version:
+
+    ```shell
+    vagrant box update --box richandrysek/vyoco
+    vagrant box list
+    ```
+
+3) Force to recreate a Vagrantfile:
+
+    ```shell
+    vagrant init -f richandrysek/vyoco
+    ```
+
+4) Add the following lines below the line "config.vm.box = "vyoco"" to log in and update an ssh key:
+
+    ```text
+    config.ssh.password = 'vagrant'
+    config.ssh.insert_key = true
+    ```
 
 ## Debugging a box before uploading
 
@@ -58,22 +86,31 @@ To try a generated box before uploading it to the cloud follow these commands.
 1) Add locally the generated box:
 
     ```shell
-    vagrant box add --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.1.box
+    vagrant box add --force --provider=vmware_desktop vyoco-dev file:///Users/shared/Workspace/builds/vyoco_vmware-iso_0.0.3.box
+    vagrant box list
     ```
 
 2) Create a Vagrantfile:
 
     ```shell
+    cd test/local
     vagrant init vyoco-dev
     ```
 
-3) Start your virtual machine:
+3) Start your virtual machine and check its status:
 
     ```shell
     vagrant up --provider=vmware_desktop
+    vagrant status
     ```
 
-4) Connect via ssh:
+4) Clone a specific and only specific branch of yocto:
+
+    ```shell
+    vagrant ssh -c "cd ~/workspace && source source/clone_poky.sh"
+    ```
+
+5) Connect via ssh:
 
     ```shell
     vagrant ssh
@@ -83,12 +120,12 @@ To try a generated box before uploading it to the cloud follow these commands.
 
 For a custom vagrant cloud box please follow these steps:
 
-1) Sing up and generate a token on app.vagrantcloud.com
+1) Sing up and generate a token on <app.vagrantcloud.com>
 2) In the file "vagrant_cloud.auto.pkrvars.hcl", set variable:
     * "vagrant_cloud_account" with your account
     * "vagrant_cloud_box_version" with your current version number
     * "vagrant_cloud_box_description" with a version description text
-3) In the file "boxes/ubuntu/22_04/pkrvars/yocto_4.0.16.pkrvars.hcl, set variable:
-    * "yocto_tools" with a list of tools to be installed for your yocto version
+3) In the file "boxes/ubuntu/22.4/yocto.pkrvars.hcl, extend variables with your identifier:
+    * "yocto_packages" with a list of tools to be installed for your yocto version
     * "yocto_poky_rev" with a revision/branch/tag to be cloned
 4) Set an environment variable "PKR_VAR_VAGRANT_CLOUD_TOKEN" with a generated token.
